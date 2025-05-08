@@ -7,20 +7,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body{
+        body {
             background: antiquewhite;
-            font-family: 'Press Start 2p', cursive;
+            font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
+
         .container {
             background: aquamarine;
             margin: 0;
@@ -31,12 +32,12 @@
             overflow: hidden;
         }
 
-        .container p{
+        .container p {
             display: flex;
             padding: 20px;
         }
 
-        .imagem-pokemon{
+        .imagem-pokemon {
             width: 150px;
             height: 150px;
             margin-bottom: 15px;
@@ -45,16 +46,16 @@
             object-fit: contain;
         }
 
-        .info-pokemon{
+        .info-pokemon {
             font-size: 18px;
             color: beige;
         }
 
-        .info-pokemon p{
+        .info-pokemon p {
             margin: 6px 0;
         }
 
-        .fita-tipo{
+        .fita-tipo {
             display: inline-block;
             background-color: aquamarine;
             color: white;
@@ -63,11 +64,11 @@
             margin-top: 8px;
         }
 
-        .area-busca{
+        .area-busca {
             margin-top: 20px;
         }
 
-        .area-busca input{
+        .area-busca input {
             padding: 8px;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -75,7 +76,7 @@
             font-size: 14px;
         }
 
-        .area-busca button{
+        .area-busca button {
             padding: 8px 12px;
             background-color: antiquewhite;
             border: none;
@@ -83,15 +84,14 @@
             cursor: pointer;
             font-weight: bold;
             transition: background-color 0.3s ease, transform 0.3s ease;
-            
         }
 
-        .area-busca button:hover{
+        .area-busca button:hover {
             background-color: aliceblue;
             transform: scale(1.05);
         }
-    
-        .chip-tipo{
+
+        .chip-tipo {
             display: inline-block;
             margin: 5px;
             background-color: #ddd;
@@ -100,49 +100,43 @@
             font-size: 12px;
         }
 
-
-    
     </style>
-
-
 </head>
 <body>
     <!-- Cartão principal do pokedéx-->
-     <div class="container">
+    <div class="container">
         <h1>Pokedéx</h1>
-        <img class="imagem-pokemon" src="http://via.placeholder.com/150" alt="Imagem do pokemon"></img>
+        <img class="imagem-pokemon" id="imagem" src="http://via.placeholder.com/150" alt="Imagem do pokemon">
         
         <div class="icon-pokemon">
-            
-        <p><strong>Nome:</strong></p> <span id="nome">----</span>
-        <p><strong>Tipo:</strong></p> <span id="tipo">----</span>
-        <p><strong>Número:</strong></p> <span id="numero">----</span>
+            <p><strong>Nome:</strong></p> <span id="nome">----</span>
+            <p><strong>Tipo:</strong></p> <span id="tipo">----</span>
+            <p><strong>Número:</strong></p> <span id="numero">----</span>
+        </div>
+
+        <div class="area-busca">
+            <input type="text" id="entrada" placeholder="Digite o nome do pokémon...">
+            <button id="botao-busca">Buscar</button>
+        </div>
     </div>
 
-    <div class="area-busca">
-        <input type="text" id="entrada" placeholder="Digite o nome do pokémon...">
-        <button id="botao-busca">Buscar</button>
-
-    </div>
-
-     </div>
-     <script>
-        const botaoBuscar = document.getElementById('botao-busca')
-        const campoEntrada = document.getElementById('entrada')
+    <script>
+        const botaoBuscar = document.getElementById('botao-busca');
+        const campoEntrada = document.getElementById('entrada');
 
         botaoBuscar.addEventListener("click", async () => {
             const buscar = campoEntrada.value.toLowerCase().trim();
-            if(!buscar){ 
+            if (!buscar) { 
                 return;
             } 
-            try{
-                const resposta = await fetch(`https://pokeapi.co/api/v2/pokemon/${buscar}`)
-                if(!resposta.ok) throw new Error('Pokemon não encontrado!')
+            try {
+                const resposta = await fetch(`https://pokeapi.co/api/v2/pokemon/${buscar}`);
+                if (!resposta.ok) throw new Error('Pokemon não encontrado!');
                 
                 const dados = await resposta.json();
                 
                 document.getElementById('nome').textContent = dados.name;
-                document.getElementById('numero').textContent = `${dados.id}`
+                document.getElementById('numero').textContent = `${dados.id}`;
                 document.getElementById('imagem').src = dados.sprites.front_default;
                 
                 const tipos = document.getElementById('tipo');
@@ -150,43 +144,41 @@
 
                 dados.types.forEach(tipoInfo => {
                     const tipo = tipoInfo.type.name;
-                    const chip = document.createElement('span')
-                    chip.classNoe = 'chip-tipo'
+                    const chip = document.createElement('span');
+                    chip.className = 'chip-tipo';
                     chip.textContent = tipo;
                     chip.style.backgroundColor = corDoTipo(tipo);
                     tipos.appendChild(chip);
-
-
-                 });
+                });
                 
-            }catch (error){
+            } catch (error) {
                 alert(error.message);
-
             }
-            function corDoTipo(tipo){
+
+            function corDoTipo(tipo) {
                 const cores = {
                     fire: "#f94144",
                     water: "#577590",
                     grass: "#43aa8b",
-                    eletric:"#f9c74f",
-                    bug:"#90be6d",
-                    normal:"#adb5bd",
-                    poison:"#9d4edd",
+                    electric: "#f9c74f",
+                    bug: "#90be6d",
+                    normal: "#adb5bd",
+                    poison: "#9d4edd",
                     ground: "#74a261",
                     psychic: "#f72585",
-                    fighting: "#d000000",
+                    fighting: "#d00000",  // Corrigido o valor da cor.
                     rock: "#6c584c",
                     ghost: "#8338ec",
-                    dragon: "3a0ca3",
+                    dragon: "#3a0ca3",
                     dark: "#2d3142",
                     ice: "#a8dadc",
-                    fairy:"#ffafcc",
+                    fairy: "#ffafcc",
                     flying: "#48cae4",
                     steel: "#8d99ae"
                 }
-                return cores[tipo] || "#888"
+                return cores[tipo] || "#888";
             }
-        })
-     </script>
+        });
+    </script>
 </body>
 </html>
