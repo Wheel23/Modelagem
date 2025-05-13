@@ -1,0 +1,40 @@
+<!--Exercício 5: Formulário com campos organizados em duas colunas-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 5</title>
+</head>
+<body>
+    <form class="formulario">
+        <input type="text" placeholder="Nome">
+        <input type="email" placeholder="Email">
+        <input type="text" placeholder="Telefone">
+        <input type="text" placeholder="Cidade">
+        <button id="botao">Enviar</button>
+    </form>
+    <style>
+        .formulario{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 0px;
+        }
+
+        .formulario button {
+            grid-column: span 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</body>
+</html>

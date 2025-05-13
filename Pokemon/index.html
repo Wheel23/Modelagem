@@ -13,13 +13,18 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+        }
+
         body {
             background: antiquewhite;
             font-family: 'Press Start 2P', cursive;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
+            overflow: hidden; /* Evitar overflow do body */
         }
 
         .container {
@@ -29,7 +34,10 @@
             border-radius: 10px;
             box-shadow: 2px 1px 4px 2px;
             text-align: center;
-            overflow: hidden;
+            overflow-y: auto; /* Permite rolagem vertical */
+            max-height: 90vh; /* Limita a altura da caixa, evitando ultrapassar a tela */
+            width: 100%;
+            max-width: 350px; /* Evita que o contêiner se expanda horizontalmente demais */
         }
 
         .container p {
@@ -100,6 +108,11 @@
             font-size: 12px;
         }
 
+        .estatisticas {
+            margin-top: 20px;
+            text-align: left;
+        }
+
     </style>
 </head>
 <body>
@@ -112,6 +125,21 @@
             <p><strong>Nome:</strong></p> <span id="nome">----</span>
             <p><strong>Tipo:</strong></p> <span id="tipo">----</span>
             <p><strong>Número:</strong></p> <span id="numero">----</span>
+            <p><strong>Peso:</strong> <span id="peso">---</span></p>
+            <p><strong>Altura:</strong> <span id="altura">---</span></p>
+        </div>
+
+        <div class="estatisticas">
+            <h3>Estatísticas:</h3>
+            <p><strong>HP:</strong> <span id="hp">----</span></p>
+            <p><strong>Ataque:</strong> <span id="ataque">----</span></p>
+            <p><strong>Defesa:</strong> <span id="defesa">----</span></p>
+            <p><strong>Velocidade:</strong> <span id="velocidade">----</span></p>
+        </div>
+
+        <div class="habilidades">
+            <h3>Habilidades:</h3>
+            <p id="habilidades">----</p>
         </div>
 
         <div class="area-busca">
@@ -138,10 +166,12 @@
                 document.getElementById('nome').textContent = dados.name;
                 document.getElementById('numero').textContent = `${dados.id}`;
                 document.getElementById('imagem').src = dados.sprites.front_default;
-                
+                document.getElementById('peso').textContent = `${dados.weight / 10} kg`;
+                document.getElementById('altura').textContent = `${dados.height / 10} m`;
+
+                // Exibir tipos
                 const tipos = document.getElementById('tipo');
                 tipos.innerHTML = '';
-
                 dados.types.forEach(tipoInfo => {
                     const tipo = tipoInfo.type.name;
                     const chip = document.createElement('span');
@@ -149,6 +179,22 @@
                     chip.textContent = tipo;
                     chip.style.backgroundColor = corDoTipo(tipo);
                     tipos.appendChild(chip);
+                });
+
+                // Exibir estatísticas
+                document.getElementById('hp').textContent = dados.stats[0].base_stat;
+                document.getElementById('ataque').textContent = dados.stats[1].base_stat;
+                document.getElementById('defesa').textContent = dados.stats[2].base_stat;
+                document.getElementById('velocidade').textContent = dados.stats[5].base_stat;
+
+                // Exibir habilidades
+                const habilidades = document.getElementById('habilidades');
+                habilidades.innerHTML = '';
+                dados.abilities.forEach(habilidade => {
+                    const habilidadeElemento = document.createElement('span');
+                    habilidadeElemento.textContent = habilidade.ability.name;
+                    habilidadeElemento.className = 'chip-tipo';
+                    habilidades.appendChild(habilidadeElemento);
                 });
                 
             } catch (error) {
@@ -166,7 +212,7 @@
                     poison: "#9d4edd",
                     ground: "#74a261",
                     psychic: "#f72585",
-                    fighting: "#d00000",  // Corrigido o valor da cor.
+                    fighting: "#d00000",
                     rock: "#6c584c",
                     ghost: "#8338ec",
                     dragon: "#3a0ca3",

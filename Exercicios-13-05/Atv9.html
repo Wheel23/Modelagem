@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 9</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Alternar Temas</title>
+        <style>
+           
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                transition: background-color 0.3s, color 0.3s; 
+            }
+    
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+    
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin: 10px;
+            }
+    
+            
+            .modo-claro {
+                background-color: white;
+                color: black;
+            }
+    
+            .modo-claro button {
+                background-color: #f0f0f0;
+            }
+    
+            .modo-claro button:hover {
+                background-color: #dcdcdc;
+            }
+    
+           
+            .modo-escuro {
+                background-color: black;
+                color: white;
+            }
+    
+            .modo-escuro button {
+                background-color: #333;
+                color: white;
+            }
+    
+            .modo-escuro button:hover {
+                background-color: #555;
+            }
+        </style>
+    </head>
+    <body class="modo-claro"> 
+        <h1>Bem-vindo!</h1>
+        <button id="modoClaro">Modo Claro</button>
+        <button id="modoEscuro">Modo Escuro</button>
+    
+        <script>
+            const body = document.body; 
+            const botaoModoClaro = document.getElementById('modoClaro');
+            const botaoModoEscuro = document.getElementById('modoEscuro');
+    
+            
+            botaoModoClaro.addEventListener('click', () => {
+                body.classList.add('modo-claro');  
+                body.classList.remove('modo-escuro');  
+            });
+    
+          
+            botaoModoEscuro.addEventListener('click', () => {
+                body.classList.add('modo-escuro');  
+                body.classList.remove('modo-claro');  
+            });
+        </script>
+    </body>
+    </html>
+    
+</body>
+</html>
